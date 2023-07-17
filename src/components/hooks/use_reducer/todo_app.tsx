@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import { AddTask } from './add_task.js';
 import { TaskList } from './task_list.js';
 
@@ -14,18 +14,42 @@ const initialTasks: Task[] = [
 	{ id: 2, text: 'Lennon Wall pic', done: false },
 ];
 
+const reducer = (tasks2: Task[], action: { type: string; id: number; text: string; done: boolean }) => {
+	switch (action.type) {
+		case 'ADD_TASK':
+			return [
+				...tasks2,
+				{
+					id: tasks2.length,
+					text: action.text,
+					done: false,
+				},
+			];
+		default:
+			return tasks2;
+	}
+};
+
 export function TaskApp() {
 	const [tasks, setTasks] = useState(initialTasks);
+	const [tasks2, dispatch] = useReducer(reducer, initialTasks);
 
 	function handleAddTask(text: string) {
-		setTasks([
+		dispatch({
+			type: 'ADD_TASK',
+			id: tasks.length,
+			text: text,
+			done: false,
+		});
+
+		/* setTasks([
 			...tasks,
 			{
 				id: tasks.length,
 				text: text,
 				done: false,
 			},
-		]);
+		]); */
 	}
 
 	function handleChangeTask(updatedTask: Task) {
@@ -50,11 +74,7 @@ export function TaskApp() {
 
 			<h3>Prague Itinerary</h3>
 			<AddTask onAddTask={handleAddTask} />
-			<TaskList
-				tasks={tasks}
-				onChangeTask={handleChangeTask}
-				onDeleteTask={handleDeleteTask}
-			/>
+			<TaskList tasks={tasks} onChangeTask={handleChangeTask} onDeleteTask={handleDeleteTask} />
 		</>
 	);
 }
