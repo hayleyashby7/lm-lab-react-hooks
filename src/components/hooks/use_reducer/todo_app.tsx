@@ -8,13 +8,17 @@ export interface Task {
 	done: boolean;
 }
 
+export interface Type {
+	type: string;
+}
+
 const initialTasks: Task[] = [
 	{ id: 0, text: 'Visit Kafka Museum', done: true },
 	{ id: 1, text: 'Watch a puppet show', done: false },
 	{ id: 2, text: 'Lennon Wall pic', done: false },
 ];
 
-const reducer = (tasks2: Task[], action: { type: string; id: number; text: string; done: boolean }) => {
+const reducer = (tasks2: Task[], action: Type & Task) => {
 	switch (action.type) {
 		case 'ADD_TASK':
 			return [
