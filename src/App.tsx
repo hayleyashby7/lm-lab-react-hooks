@@ -8,13 +8,12 @@ import { Focus } from './components/hooks/use_ref/focus';
 import { CountCats } from './components/hooks/use_state/count_cats';
 import { TaskApp } from './components/hooks/use_reducer/todo_app';
 import { Section } from './components/section';
-import Post from './components/hooks/use_x/posts';
+import { TechnoBabble } from './components/hooks/use_x/technobabble';
 
 function App() {
 	return (
 		<>
 			<div className='App'>
-
 				<Section>
 					<Parent />
 				</Section>
@@ -29,7 +28,7 @@ function App() {
 
 				<Section>
 					<CountRenders />
-					<Focus/>
+					<Focus />
 				</Section>
 
 				<Section>
@@ -38,7 +37,7 @@ function App() {
 
 				<Section>
 					<Todo />
-					<Post />
+					<TechnoBabble />
 				</Section>
 
 				<Section>
