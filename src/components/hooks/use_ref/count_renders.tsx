@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export const CountRenders = () => {
 	const [value, setValue] = useState('');
-	const count = 1;
+	const count = useRef<number>(1);
+
+	useEffect(() => {
+		count.current++;
+	});
 
 	return (
 		<>
@@ -11,11 +15,13 @@ export const CountRenders = () => {
 			<input
 				value={value}
 				type='text'
-				onChange={(e) => setValue(e.target.value)}
+				onChange={(e) => {
+					setValue(e.target.value);
+				}}
 			/>
 
 			<p>{value}</p>
-			<p>I have rendered {count} times</p>
+			<p>I have rendered {count.current} times</p>
 		</>
 	);
 };
