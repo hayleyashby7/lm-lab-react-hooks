@@ -1,12 +1,8 @@
 import { useState } from 'react';
-import type { Task } from './todo_app';
+import type { Task } from './Task';
 
 export const TaskDisplay: React.FC<{
-	task: {
-		id: number;
-		text: string;
-		done: boolean;
-	};
+	task: Task;
 	onChange: (task: Task) => void;
 	onDelete: (taskId: number) => void;
 }> = ({ task, onChange, onDelete }) => {
@@ -49,7 +45,9 @@ export const TaskDisplay: React.FC<{
 					onClick={() => setIsEditing(!isEditing)}>
 					Edit
 				</button>
-				<button className='task-list__button'>Delete</button>
+				<button className='task-list__button' disabled>
+					Delete
+				</button>
 			</label>
 		);
 	}

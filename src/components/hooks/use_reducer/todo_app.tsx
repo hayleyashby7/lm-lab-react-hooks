@@ -1,12 +1,7 @@
-import { useReducer, useState } from 'react';
+import { useReducer } from 'react';
 import { AddTask } from './add_task.js';
 import { TaskList } from './task_list.js';
-
-export interface Task {
-	id: number;
-	text: string;
-	done: boolean;
-}
+import { Task } from './Task.js';
 
 export interface Type {
 	type: string;
@@ -18,25 +13,38 @@ const initialTasks: Task[] = [
 	{ id: 2, text: 'Lennon Wall pic', done: false },
 ];
 
-const reducer = (tasks2: Task[], action: Type & Task) => {
+const reducer = (tasks: Task[], action: Type & Task) => {
 	switch (action.type) {
 		case 'ADD_TASK':
 			return [
-				...tasks2,
+				...tasks,
 				{
-					id: tasks2.length,
+					id: tasks.length,
 					text: action.text,
 					done: false,
 				},
 			];
+		case 'UPDATE_TASK':
+			return tasks.map((task) => {
+				if (task.id === action.id) {
+					return {
+						...task,
+						text: action.text,
+						done: action.done,
+					};
+				} else {
+					return task;
+				}
+			});
+		case 'DELETE_TASK':
+			return tasks.filter((task) => task.id !== action.id);
 		default:
-			return tasks2;
+			return tasks;
 	}
 };
 
 export function TaskApp() {
-	const [tasks, setTasks] = useState(initialTasks);
-	const [tasks2, dispatch] = useReducer(reducer, initialTasks);
+	const [tasks, dispatch] = useReducer(reducer, initialTasks);
 
 	function handleAddTask(text: string) {
 		dispatch({
@@ -45,31 +53,22 @@ export function TaskApp() {
 			text: text,
 			done: false,
 		});
-
-		/* setTasks([
-			...tasks,
-			{
-				id: tasks.length,
-				text: text,
-				done: false,
-			},
-		]); */
 	}
 
 	function handleChangeTask(updatedTask: Task) {
-		setTasks(
-			tasks.map((t) => {
-				if (t.id === updatedTask.id) {
-					return updatedTask;
-				} else {
-					return t;
-				}
-			})
-		);
+		dispatch({
+			type: 'UPDATE_TASK',
+			id: updatedTask.id,
+			text: updatedTask.text,
+			done: updatedTask.done,
+		});
 	}
 
 	function handleDeleteTask(taskId: number) {
-		setTasks(tasks.filter((t) => t.id !== taskId));
+		dispatch({
+			type: 'DELETE_TASK',
+			id: taskId,
+		});
 	}
 
 	return (

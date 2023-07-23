@@ -1,4 +1,4 @@
-import type { Task } from './todo_app';
+import type { Task } from './Task';
 import { TaskDisplay } from './task_display';
 
 export const TaskList: React.FC<{
