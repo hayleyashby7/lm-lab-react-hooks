@@ -8,6 +8,7 @@ import { Focus } from './components/hooks/use_ref/focus';
 import { CountCats } from './components/hooks/use_state/count_cats';
 // import { TaskApp } from './components/hooks/use_reducer/todo_app';
 import { Section } from './components/section';
+import Post from './components/hooks/use_x/posts';
 
 function App() {
 	return (
@@ -37,6 +38,7 @@ function App() {
 
 				<Section>
 					<Todo />
+					<Post />
 				</Section>
 
 				<Section>
