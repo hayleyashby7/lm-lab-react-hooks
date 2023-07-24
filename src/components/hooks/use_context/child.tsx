@@ -1,15 +1,14 @@
-import { useContext } from 'react';
-import { ThemeContext } from './parent';
+import { useThemeContext } from './useThemeContext';
 
 export const Child: React.FC<{ title: string }> = ({ title }) => {
-	const dark = useContext(ThemeContext);
+	const { theme } = useThemeContext();
 
-	const theme = {
-		backgroundColor: dark ? '#333' : '#CCC',
-		color: dark ? 'white' : '#333',
+	const themeStyle = {
+		backgroundColor: theme ? '#333' : '#CCC',
+		color: theme ? 'white' : '#333',
 		padding: '2rem',
 		margin: '2rem',
 	};
 
-	return <div style={theme}>{title}</div>;
+	return <div style={themeStyle}>{title}</div>;
 };
